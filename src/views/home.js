@@ -55,7 +55,6 @@ export function homeView() {
       <div class="section-container">
         <div class="catalog-gallery-header">
           <div class="catalog-gallery-text">
-            <span class="catalog-eyebrow">Digital Catalogs</span>
             <h2 class="catalog-headline">Browse the Latest Product <span class="title-cursive title-orange">Catalogs</span></h2>
             <p class="catalog-subtext">Flip through full product lines, specs, and pricing from our manufacturers. Plan your next order without leaving the page.</p>
           </div>
@@ -287,7 +286,7 @@ export function homeView() {
         <div class="about-layout">
           <div class="about-intro">
             <span class="about-eyebrow">About Toys 2000</span>
-            <h2 class="about-headline">The place for <span class="title-cursive title-orange">all things kids.</span></h2>
+            <h2 class="about-headline">The place for <span class="title-cursive title-orange">all things fun.</span></h2>
             <p class="about-lead">We are your trusted sales representative, connecting retailers with top vendors across the toy, outdoor recreation, and sporting goods industries.</p>
             <p class="about-lead">Serving the entire Eastern US and Puerto Rico, plus the Caribbean as far east as St. Lucia, we bring the best products directly to you.</p>
             <div class="about-cta-row">
@@ -349,7 +348,7 @@ export function homeView() {
               <a href="#catalogs">Catalogs</a>
               <a href="#categories">Categories</a>
               <a href="#featured">Promos and Specials</a>
-              <a href="#" class="nav-link" data-route="/products">Products</a>
+              <a href="#" data-route="/products">Products</a>
             </div>
             <div class="footer-links-col">
               <h4>Company</h4>

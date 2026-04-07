@@ -25,8 +25,8 @@ export function createNavbar() {
       </div>
     </div>
     <div class="nav-right">
-      <a href="https://toys2000.markettime.com/signup" class="nav-quote-btn" id="nav-quote-btn">
-        Sign up today
+      <a href="#" class="nav-quote-btn" id="nav-quote-btn" data-route="/products">
+        Order Now
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
       <button class="nav-cart-btn" id="open-cart-btn" aria-label="Cart">
@@ -81,9 +81,9 @@ export function createNavbar() {
         </a>
       `).join('')}
       <div class="mobile-menu-divider"></div>
-      <a href="https://toys2000.markettime.com/signup" class="mobile-menu-link mobile-menu-link-cta">
+      <a href="#" class="mobile-menu-link mobile-menu-link-cta" data-route="/products">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-        Sign up today
+        Order Now
       </a>
     </div>
   `;
@@ -115,7 +115,11 @@ export function createNavbar() {
     });
   });
 
-  // Nav quote button removed since it's a direct external link now
+  // Nav "Order Now" button → products page
+  nav.querySelector('#nav-quote-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    router.navigate('/products');
+  });
 
   // --- Cart ---
   nav.querySelector('#open-cart-btn').addEventListener('click', () => {

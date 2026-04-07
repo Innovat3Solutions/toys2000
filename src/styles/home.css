@@ -1096,8 +1096,22 @@
 
 .about-cta-row {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: 12px;
   margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.about-cta-row .btn-hero-secondary {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.about-cta-row .btn-hero-secondary:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: var(--text-secondary);
 }
 
 .about-story-card {
@@ -1177,12 +1191,7 @@
   }
 
   .about-cta-row {
-    flex-direction: column;
-  }
-
-  .about-cta-row .btn {
-    text-align: center;
-    justify-content: center;
+    flex-direction: row;
   }
 
   .footer-values-grid {
@@ -1327,7 +1336,7 @@
 }
 
 .footer-logo-img {
-  height: 96px;
+  height: 180px;
   width: auto;
   object-fit: contain;
 }
