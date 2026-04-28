@@ -4,7 +4,7 @@ export const data = {
     {
       id: 'resort-destination',
       name: 'Resort & Destination',
-      image: '/brands/aqua_leisure/aqua_leisure_hero_3.png',
+      image: '/hero/Aqua_Leisure-1.jpg',
       description: 'Premium products for resorts, hotels, and vacation destinations',
       size: 'large',
       group: 'outdoor'
@@ -12,7 +12,7 @@ export const data = {
     {
       id: 'pool',
       name: 'Pool',
-      image: '/categories/pool_kid_face.png',
+      image: '/hero/Aqua_Leisure_2.jpg',
       description: 'Floats, toys, and gear for pool environments',
       size: 'small',
       group: 'outdoor'
@@ -20,7 +20,7 @@ export const data = {
     {
       id: 'sporting-goods',
       name: 'Sporting Goods',
-      image: '/brands/SAT1_sport/sat1_sport_hero_4.png',
+      image: '/hero/Sportsstuff_1.avif',
       description: 'Sports equipment and active play for sporting goods retailers',
       size: 'large',
       group: 'outdoor'
@@ -28,7 +28,7 @@ export const data = {
     {
       id: 'hardware',
       name: 'Hardware',
-      image: '/categories/hardware_toy_set.png',
+      image: '/hero/Sportsstuff_2.avif',
       description: 'Playful construction and tool sets for young builders',
       size: 'small',
       group: 'outdoor'
@@ -36,7 +36,7 @@ export const data = {
     {
       id: 'private-store',
       name: 'Private Store',
-      image: '/categories/private_store_boutique.png',
+      image: '/hero/Masterpiece_1.jpg',
       description: 'Curated collections for boutique and gift shops',
       size: 'large',
       group: 'specialty'
@@ -44,7 +44,7 @@ export const data = {
     {
       id: 'supermarket',
       name: 'Supermarket',
-      image: '/brands/masterpieces/masterpieces_hero_3.png',
+      image: '/hero/Airhead_2.webp',
       description: 'High-volume products for supermarket and retail chains',
       size: 'small',
       group: 'specialty'
@@ -52,7 +52,7 @@ export const data = {
     {
       id: 'strictly-toy',
       name: 'Strictly Toy',
-      image: '/brands/lionel/lionel_hero_1.png',
+      image: '/hero/Lionel_1.jpg',
       description: 'Classic toys, trains, and collectibles for dedicated toy stores',
       size: 'small',
       group: 'specialty'
@@ -60,7 +60,7 @@ export const data = {
     {
       id: 'zag',
       name: 'Zoos, Aquariums, & Gardens',
-      image: '/categories/zag.png',
+      image: '/hero/Silver_Circle-1.webp',
       description: 'Educational toys, plush animals, and nature inspired gifts for ZAG destinations',
       size: 'large',
       group: 'specialty'
@@ -68,116 +68,246 @@ export const data = {
     {
       id: 'pap',
       name: 'Pap',
-      image: '/brands/ovvel/ovvel_hero_4.png',
+      image: '/hero/Yukon-1.jpg',
       description: 'Branded merchandise and accessories',
       size: 'small',
       group: 'specialty'
     }
   ],
 
-  // Hero slides using real manufacturer images — diverse product showcase
+  // Hero slides — copy is tailored to what each photograph actually shows
   heroSlides: [
     {
-      id: 'slide-water',
-      tag: 'Water Fun',
-      accentWord: 'Splash',
-      headline: 'Where Every Splash Begins',
-      subheadline: 'Premium pool floats, towables, and water toys for resorts, hotels, and retailers.',
-      ctaPrimary: { text: 'Shop Water Toys', link: '/products', category: 'water-sports' },
-      ctaSecondary: { text: 'View Catalogs', link: '#catalogs' },
-      image: '/brands/aqua_leisure/aqua_leisure_hero_1.png',
-      thumb: '/brands/airhead/airhead_hero_2.png',
-      textEffect: 'splash',
-      accentClass: 'accent-blue'
-    },
-    {
-      id: 'slide-music',
-      tag: 'Musical Instruments',
-      accentWord: 'Note',
-      headline: 'Where Every Note Begins',
-      subheadline: 'Kid friendly ukuleles, recorders, and percussion — music programs love them.',
-      ctaPrimary: { text: 'Shop Instruments', link: '/products', category: 'music' },
-      ctaSecondary: { text: 'View Catalogs', link: '#catalogs' },
-      image: '/brands/trophy_music/trophy_music_hero_3.png',
-      thumb: '/brands/trophy_music/trophy_music_hero_1.png',
-      textEffect: 'musical',
-      accentClass: 'accent-yellow'
-    },
-    {
-      id: 'slide-splash',
-      tag: 'Outdoor Play',
-      accentWord: 'Moment',
-      headline: 'Where Every Moment Begins',
-      subheadline: 'Splash pads, sprinklers, and outdoor water play that keep kids smiling all day.',
-      ctaPrimary: { text: 'Shop Outdoor Play', link: '/products', category: 'outdoor-play' },
-      ctaSecondary: { text: 'View Catalogs', link: '#catalogs' },
-      image: '/brands/boss_play/boss_play_hero_4.png',
-      thumb: '/brands/boss_play/boss_play_hero_1.png',
-      textEffect: 'energize',
-      accentClass: 'accent-green'
-    },
-    {
-      id: 'slide-puzzles',
-      tag: 'Puzzles & Games',
-      accentWord: 'Discovery',
-      headline: 'Where Every Discovery Begins',
-      subheadline: 'Jigsaw puzzles, board games, and family entertainment for every age group.',
-      ctaPrimary: { text: 'Shop Puzzles', link: '/products', category: 'puzzles' },
-      ctaSecondary: { text: 'View Catalogs', link: '#catalogs' },
-      image: '/brands/masterpieces/masterpieces_hero_3.png',
-      thumb: '/brands/masterpieces/masterpieces_hero_1.png',
-      textEffect: 'rumble',
-      accentClass: 'accent-yellow'
-    },
-    {
-      id: 'slide-beach',
-      tag: 'Beach & Sports',
-      accentWord: 'Adventure',
-      headline: 'Where Every Adventure Begins',
-      subheadline: 'Beach toys, sports gear, and outdoor activities for kids who love to explore.',
-      ctaPrimary: { text: 'Shop Beach Gear', link: '/products', category: 'beach-toys' },
-      ctaSecondary: { text: 'View Catalogs', link: '#catalogs' },
-      image: '/brands/ovvel/ovvel_hero_1.png',
-      thumb: '/brands/rico_italia/rico_italia_hero_1.png',
+      id: 'slide-airhead-1',
+      tag: 'Big-Air Towables',
+      accentWord: 'Scream',
+      headline: 'Built for the Loudest Scream of Summer',
+      subheadline: "Airhead Switch Back and the rest of the multi-rider lineup — engineered for the moment two friends can't stop laughing at thirty knots.",
+      ctaPrimary: { text: 'Shop Airhead', link: '/products', brand: 'airhead' },
+      ctaSecondary: { text: 'View Airhead Catalog', link: '#catalogs', catalog: 'airhead' },
+      image: '/hero/Airhead-1.webp',
+      thumb: '/hero/Airhead-1.webp',
       textEffect: 'energize',
       accentClass: 'accent-blue'
     },
     {
-      id: 'slide-beach-fun',
-      tag: 'Beach & Family',
-      accentWord: 'Memory',
-      headline: 'Where Every Memory Begins',
-      subheadline: 'Beach balls, inflatables, and water toys that bring families together at the shore.',
-      ctaPrimary: { text: 'Shop Beach Toys', link: '/products', category: 'beach-toys' },
-      ctaSecondary: { text: 'View Catalogs', link: '#catalogs' },
-      image: '/brands/water_sports/water_sports_llc_hero_4.png',
-      thumb: '/brands/ovvel/ovvel_hero_1.png',
+      id: 'slide-airhead-2',
+      tag: 'Wakesurf & Wakeboard',
+      accentWord: 'Carve',
+      headline: 'Carve a Cleaner Wake',
+      subheadline: 'Airhead boards and rope packages built for the rider chasing the perfect set — the kind that only shows up at golden hour.',
+      ctaPrimary: { text: 'Shop Airhead', link: '/products', brand: 'airhead' },
+      ctaSecondary: { text: 'View Airhead Catalog', link: '#catalogs', catalog: 'airhead' },
+      image: '/hero/Airhead_2.webp',
+      thumb: '/hero/Airhead_2.webp',
       textEffect: 'energize',
       accentClass: 'accent-orange'
     },
     {
-      id: 'slide-thrills',
-      tag: 'Towables & Tubes',
-      accentWord: 'Thrill',
-      headline: 'Where Every Thrill Begins',
-      subheadline: 'From 1 rider rockets to 4 person party decks — wholesale pricing for your fleet.',
-      ctaPrimary: { text: 'Browse Towables', link: '/products', category: 'towables' },
-      ctaSecondary: { text: 'View Catalogs', link: '#catalogs' },
-      image: '/brands/airhead/airhead_hero_1.png',
-      thumb: '/brands/boss_play/boss_play_hero_2.png',
+      id: 'slide-aqua-leisure-1',
+      tag: 'Resort Pool Floats',
+      accentWord: 'Recline',
+      headline: 'The Recline Your Guests Came For',
+      subheadline: 'Tropical-print loungers and luxury pool floats from Aqua Leisure — the must-have on every resort deck from Florida to St. Lucia.',
+      ctaPrimary: { text: 'Shop Aqua Leisure', link: '/products', brand: 'aqua-leisure' },
+      ctaSecondary: { text: 'View Aqua Leisure Catalog', link: '#catalogs', catalog: 'aqua-leisure' },
+      image: '/hero/Aqua_Leisure-1.jpg',
+      thumb: '/hero/Aqua_Leisure-1.jpg',
+      textEffect: 'splash',
+      accentClass: 'accent-blue'
+    },
+    {
+      id: 'slide-aqua-leisure-2',
+      tag: 'Pool & Party',
+      accentWord: 'Drift',
+      headline: 'Drift Together. Splash Together.',
+      subheadline: 'Aqua Leisure inner tubes and party floats — the pool moment guests text home about before they even dry off.',
+      ctaPrimary: { text: 'Shop Aqua Leisure', link: '/products', brand: 'aqua-leisure' },
+      ctaSecondary: { text: 'View Aqua Leisure Catalog', link: '#catalogs', catalog: 'aqua-leisure' },
+      image: '/hero/Aqua_Leisure_2.jpg',
+      thumb: '/hero/Aqua_Leisure_2.jpg',
+      textEffect: 'splash',
+      accentClass: 'accent-green'
+    },
+    {
+      id: 'slide-lionel-1',
+      tag: 'A Lionel Legacy',
+      accentWord: 'Heritage',
+      headline: '125 Years of American Heritage',
+      subheadline: "From 1938 to today — Lionel sets are the trains your grandfather pulled out of the box, still pulling laps around the holiday tree.",
+      ctaPrimary: { text: 'Shop Lionel', link: '/products', brand: 'lionel' },
+      ctaSecondary: { text: 'Visit Lionel', link: '/brand', brand: 'lionel' },
+      image: '/hero/Lionel_1.jpg',
+      thumb: '/hero/Lionel_1.jpg',
+      textEffect: 'reveal',
+      accentClass: 'accent-orange'
+    },
+    {
+      id: 'slide-lionel-2',
+      tag: 'Lionel Premium',
+      accentWord: 'Detail',
+      headline: 'Detail That Stops the Conversation',
+      subheadline: 'Show-floor Lionel locomotives engineered for the serious collector and the gift-shop showpiece — every rivet exactly where it should be.',
+      ctaPrimary: { text: 'Shop Lionel', link: '/products', brand: 'lionel' },
+      ctaSecondary: { text: 'Visit Lionel', link: '/brand', brand: 'lionel' },
+      image: '/hero/Lionel-2.jpg',
+      thumb: '/hero/Lionel-2.jpg',
+      textEffect: 'reveal',
+      accentClass: 'accent-yellow'
+    },
+    {
+      id: 'slide-masterpieces-1',
+      tag: 'National Parks Puzzles',
+      accentWord: 'America',
+      headline: 'All of America in 1,000 Pieces',
+      subheadline: "MasterPieces National Parks collection — the bestselling puzzle line for gift shops, lodges, ranger stations, and anywhere people pick up a souvenir.",
+      ctaPrimary: { text: 'Shop MasterPieces', link: '/products', brand: 'masterpieces' },
+      ctaSecondary: { text: 'Visit MasterPieces', link: '/brand', brand: 'masterpieces' },
+      image: '/hero/Masterpiece_1.jpg',
+      thumb: '/hero/Masterpiece_1.jpg',
+      textEffect: 'rumble',
+      accentClass: 'accent-yellow'
+    },
+    {
+      id: 'slide-silver-circle-1',
+      tag: 'Nature Discovery',
+      accentWord: 'Wild',
+      headline: 'Bottle Up the Wild',
+      subheadline: 'Silver Circle build-your-own terrariums and nature kits — the hands-on bestseller at every zoo, aquarium, and garden gift shop.',
+      ctaPrimary: { text: 'Shop Silver Circle', link: '/products', brand: 'silver-circle' },
+      ctaSecondary: { text: 'View Silver Circle Catalog', link: '#catalogs', catalog: 'silver-circle' },
+      image: '/hero/Silver_Circle-1.webp',
+      thumb: '/hero/Silver_Circle-1.webp',
+      textEffect: 'energize',
+      accentClass: 'accent-green'
+    },
+    {
+      id: 'slide-sportsstuff-1',
+      tag: 'Pool Lounge',
+      accentWord: 'Chill',
+      headline: 'The Chill Your Deck Has Been Missing',
+      subheadline: 'SportsStuff racing-stripe lounge floats with built-in cup holders — the pool upgrade guests notice the second they sit down.',
+      ctaPrimary: { text: 'Shop SportsStuff', link: '/products', brand: 'sportsstuff' },
+      ctaSecondary: { text: 'View SportsStuff Catalog', link: '#catalogs', catalog: 'sportsstuff' },
+      image: '/hero/Sportsstuff_1.webp',
+      thumb: '/hero/Sportsstuff_1.webp',
       textEffect: 'energize',
       accentClass: 'accent-blue'
     },
     {
-      id: 'slide-resort',
-      tag: 'Resort Experience',
-      accentWord: 'Escape',
-      headline: 'Where Every Escape Begins',
-      subheadline: 'Waterparks, pool decks, and resort attractions — everything to wow your guests.',
-      ctaPrimary: { text: 'Shop Resort Gear', link: '/products', category: 'pool-floats' },
-      ctaSecondary: { text: 'View Catalogs', link: '#catalogs' },
-      image: '/brands/boss_play/boss_play_hero_5.png',
-      thumb: '/brands/aqua_divers/aqua_divers_hero_5.png',
+      id: 'slide-sportsstuff-2',
+      tag: 'Winter Tubing',
+      accentWord: 'Slope',
+      headline: 'Same Tube. Different Slope.',
+      subheadline: "SportsStuff snow tubes built for the sledding hill — the off-season pickup that keeps winter sport shops moving inventory year-round.",
+      ctaPrimary: { text: 'Shop SportsStuff', link: '/products', brand: 'sportsstuff' },
+      ctaSecondary: { text: 'View SportsStuff Catalog', link: '#catalogs', catalog: 'sportsstuff' },
+      image: '/hero/Sportsstuff_2.webp',
+      thumb: '/hero/Sportsstuff_2.webp',
+      textEffect: 'reveal',
+      accentClass: 'accent-blue'
+    },
+    {
+      id: 'slide-sportsstuff-3',
+      tag: 'Party Islands',
+      accentWord: 'Crew',
+      headline: 'Bring the Whole Crew Aboard',
+      subheadline: 'The SportsStuff Fiesta Private Island — 8 spots, 11.5 feet, the centerpiece float every lake fleet gets asked about by name.',
+      ctaPrimary: { text: 'Shop SportsStuff', link: '/products', brand: 'sportsstuff' },
+      ctaSecondary: { text: 'View SportsStuff Catalog', link: '#catalogs', catalog: 'sportsstuff' },
+      image: '/hero/Sportsstuff_3.webp',
+      thumb: '/hero/Sportsstuff_3.webp',
+      textEffect: 'energize',
+      accentClass: 'accent-orange'
+    },
+    {
+      id: 'slide-us-divers-1',
+      tag: 'Snorkel Essentials',
+      accentWord: 'Pause',
+      headline: 'Just Before the Pause Becomes a Plunge',
+      subheadline: 'US Divers fins, masks, and travel-ready snorkel sets — outfitting beach destinations from Puerto Rico to St. Lucia.',
+      ctaPrimary: { text: 'Shop US Divers', link: '/products', brand: 'us-divers' },
+      ctaSecondary: { text: 'Visit US Divers', link: '/brand', brand: 'us-divers' },
+      image: '/hero/US_Divers-1.webp',
+      thumb: '/hero/US_Divers-1.webp',
+      textEffect: 'splash',
+      accentClass: 'accent-blue'
+    },
+    {
+      id: 'slide-us-divers-2',
+      tag: 'Pro Dive Gear',
+      accentWord: 'Leap',
+      headline: 'Geared Up for the Leap',
+      subheadline: 'Pro-grade US Divers wetsuits, BCDs, and regulators — for the dive shop that serves certified explorers, not just snorkelers.',
+      ctaPrimary: { text: 'Shop US Divers', link: '/products', brand: 'us-divers' },
+      ctaSecondary: { text: 'Visit US Divers', link: '/brand', brand: 'us-divers' },
+      image: '/hero/US_Divers_2.webp',
+      thumb: '/hero/US_Divers_2.webp',
+      textEffect: 'splash',
+      accentClass: 'accent-green'
+    },
+    {
+      id: 'slide-us-divers-3',
+      tag: 'Sunset Snorkel',
+      accentWord: 'Golden',
+      headline: 'When the Crew Walks Into Golden Hour',
+      subheadline: 'Snorkel kits and beach gear from US Divers — the shore-day staple your guests are still talking about at dinner.',
+      ctaPrimary: { text: 'Shop US Divers', link: '/products', brand: 'us-divers' },
+      ctaSecondary: { text: 'Visit US Divers', link: '/brand', brand: 'us-divers' },
+      image: '/hero/US_Divers_3.webp',
+      thumb: '/hero/US_Divers_3.webp',
+      textEffect: 'splash',
+      accentClass: 'accent-orange'
+    },
+    {
+      id: 'slide-us-divers-4',
+      tag: 'Family Snorkel',
+      accentWord: 'First Mask',
+      headline: 'The First Mask Is the One They Remember',
+      subheadline: 'US Divers kid-fit snorkel sets — the bestseller in every Caribbean resort kiosk, and the start of a thousand reef stories.',
+      ctaPrimary: { text: 'Shop US Divers', link: '/products', brand: 'us-divers' },
+      ctaSecondary: { text: 'Visit US Divers', link: '/brand', brand: 'us-divers' },
+      image: '/hero/US_Divers_4.webp',
+      thumb: '/hero/US_Divers_4.webp',
+      textEffect: 'splash',
+      accentClass: 'accent-yellow'
+    },
+    {
+      id: 'slide-us-divers-5',
+      tag: 'Underwater',
+      accentWord: 'Submerge',
+      headline: 'Submerge into the Quiet',
+      subheadline: 'US Divers full-face masks and travel snorkels — what your reef-bound guests reach for first, and what they ask to take home.',
+      ctaPrimary: { text: 'Shop US Divers', link: '/products', brand: 'us-divers' },
+      ctaSecondary: { text: 'Visit US Divers', link: '/brand', brand: 'us-divers' },
+      image: '/hero/US_divers_5.webp',
+      thumb: '/hero/US_divers_5.webp',
+      textEffect: 'splash',
+      accentClass: 'accent-blue'
+    },
+    {
+      id: 'slide-yukon-1',
+      tag: 'Backcountry',
+      accentWord: 'Solitude',
+      headline: 'Where Solitude Has a Soundtrack of Snow',
+      subheadline: "Yukon Charlie's snowshoes and trekking poles — built for the backcountry retailer whose customers actually use them.",
+      ctaPrimary: { text: "Shop Yukon Charlie's", link: '/products', brand: 'yukon-charlies' },
+      ctaSecondary: { text: "View Yukon Charlie's Catalog", link: '#catalogs', catalog: 'yukon-charlies' },
+      image: '/hero/Yukon-1.jpg',
+      thumb: '/hero/Yukon-1.jpg',
+      textEffect: 'reveal',
+      accentClass: 'accent-blue'
+    },
+    {
+      id: 'slide-yukon-2',
+      tag: 'Winter Adventure',
+      accentWord: 'Vista',
+      headline: 'Hike to the Vista. Stay for the Quiet.',
+      subheadline: "Yukon Charlie's winter lineup — the snowshoe brand specialty shops keep restocking, season after season.",
+      ctaPrimary: { text: "Shop Yukon Charlie's", link: '/products', brand: 'yukon-charlies' },
+      ctaSecondary: { text: "View Yukon Charlie's Catalog", link: '#catalogs', catalog: 'yukon-charlies' },
+      image: '/hero/Yukon_2.jpg',
+      thumb: '/hero/Yukon_2.jpg',
       textEffect: 'reveal',
       accentClass: 'accent-green'
     }
@@ -313,7 +443,7 @@ export const data = {
       cta: 'Sign Up Today',
       link: 'https://toys2000.markettime.com/signup',
       bgColor: 'linear-gradient(135deg, #f15a24, #ff7a4d)',
-      image: '/brands/boss_play/boss_play_hero_4.png'
+      image: '/hero/Airhead-1.webp'
     },
     {
       id: 'promo-register',
@@ -331,6 +461,7 @@ export const data = {
       id: 'airhead',
       name: 'Airhead',
       logo: '/logos/Airhead-Primary-Logo-website.png',
+      image: '/hero/Airhead-1.webp',
       catalogUrl: 'https://cdn.flipsnack.com/widget/v2/widget.html?hash=NzY2RDlCOTlFOEMrdjE5d2MxMTZyaA',
       description: 'Water sports towables, tubes, and accessories for every adventure.',
       year: '2026'
@@ -339,7 +470,7 @@ export const data = {
       id: 'sportsstuff',
       name: 'SportsStuff',
       logo: '/logos/sportsstuffcom.png',
-      image: '/brands/airhead/airhead_hero_3.png',
+      image: '/hero/Sportsstuff_3.webp',
       catalogUrl: 'https://cdn.flipsnack.com/widget/v2/widget.html?hash=NzY2RDlCOTlFOEMrdXBzNjVhYWppcQ',
       description: 'Premium towables, water sports gear, and outdoor recreation equipment.',
       year: '2026 27'
@@ -348,7 +479,7 @@ export const data = {
       id: 'yukon-charlies',
       name: "Yukon Charlie's",
       logo: '/logos/Yukon-Charlies_Primary-Logo_Stacked_Black-Blue.png',
-      image: '/brands/ovvel/ovvel_hero_6.png',
+      image: '/hero/Yukon_2.jpg',
       catalogUrl: 'https://cdn.flipsnack.com/widget/v2/widget.html?hash=NzY2RDlCOTlFOEMrN3huYTFra3Z4bg',
       description: 'Snowshoes, trekking poles, and winter outdoor equipment.',
       year: '2026 27'
@@ -357,6 +488,7 @@ export const data = {
       id: 'aqua-leisure',
       name: 'Aqua Leisure',
       logo: '/logos/aqua-leisure-vendor.png',
+      image: '/hero/Aqua_Leisure-1.jpg',
       catalogUrl: 'https://cdn.flipsnack.com/widget/v2/widget.html?hash=NzY2RDlCOTlFOEMrdmhtNDgwYWppcQ',
       description: 'Pool floats, swim gear, and aquatic leisure products.',
       year: '2026'
@@ -365,6 +497,7 @@ export const data = {
       id: 'lionel',
       name: 'Lionel',
       logo: '/logos/lionel-vendor.png',
+      image: '/hero/Lionel-2.jpg',
       catalogUrl: '',
       description: 'America\'s favorite model trains since 1900.',
       year: ''
@@ -373,6 +506,7 @@ export const data = {
       id: 'masterpieces',
       name: 'MasterPieces',
       logo: '/logos/masterpieces-logo.png',
+      image: '/hero/Masterpiece_1.jpg',
       catalogUrl: '',
       description: 'Puzzles and games — an American puzzle company.',
       year: ''
@@ -380,7 +514,8 @@ export const data = {
     {
       id: 'trophy-music',
       name: 'Trophy Music',
-      logo: '/logos/3d_toy_store.png',
+      logo: '/logos/trophy_music_co.png',
+      image: '/brands/trophy_music/trophy_music_hero_3.png',
       catalogUrl: '',
       pdfUrl: '/catalogs/trophy_music_catalog_2025.pdf',
       description: 'Kid friendly musical instruments and music toys for gift shops and resorts.',
@@ -390,7 +525,7 @@ export const data = {
       id: 'silver-circle',
       name: 'Silver Circle',
       logo: '/logos/toys_by_nature.png',
-      image: '/brands/silver_circle/silver_circle_hero_6.png',
+      image: '/hero/Silver_Circle-1.webp',
       catalogUrl: '',
       pdfUrl: '/catalogs/silver_circle_catalog_2026.pdf',
       description: 'Educational nature toys and exploration kits for resorts.',
@@ -399,7 +534,8 @@ export const data = {
     {
       id: '3d-toy-store',
       name: 'The 3D Toy Store',
-      logo: '/logos/trophy_music_co.png',
+      logo: '/logos/3d_toy_store.png',
+      image: '/brands/3d_toy_store/the_3d_toy_store_hero_1.png',
       catalogUrl: '',
       pdfUrl: '/catalogs/3d_toy_store_catalog_2026.pdf',
       description: '3D printed and collectible toys for gift shops.',
@@ -417,6 +553,7 @@ export const data = {
       heroImage: '/brands/airhead/airhead_hero_1.png',
       images: ['/brands/airhead/airhead_hero_2.png', '/brands/airhead/airhead_hero_3.png', '/brands/airhead/airhead_hero_4.png', '/brands/airhead/airhead_hero_5.png', '/brands/airhead/airhead_hero_6.png'],
       logo: '/logos/Airhead-Primary-Logo-website.png',
+      heroVideo: '/brand-videos/airhead.mp4',
       featured: true
     },
     {
@@ -428,6 +565,7 @@ export const data = {
       heroImage: '/brands/aqua_leisure/aqua_leisure_hero_1.png',
       images: ['/brands/aqua_leisure/aqua_leisure_hero_2.png', '/brands/aqua_leisure/aqua_leisure_hero_3.png', '/brands/aqua_leisure/aqua_leisure_hero_4.png', '/brands/aqua_leisure/aqua_leisure_hero_5.png', '/brands/aqua_leisure/aqua_leisure_hero_6.png'],
       logo: '/logos/aqua_leisure.png',
+      heroVideo: '/brand-videos/aqua-leisure.mp4',
       featured: true
     },
     {
@@ -439,6 +577,7 @@ export const data = {
       heroImage: '/brands/water_sports/water_sports_llc_hero_1.png',
       images: ['/brands/water_sports/water_sports_llc_hero_2.png', '/brands/water_sports/water_sports_llc_hero_3.png', '/brands/water_sports/water_sports_llc_hero_4.png', '/brands/water_sports/water_sports_llc_hero_5.png', '/brands/water_sports/water_sports_llc_hero_6.png'],
       logo: '/logos/water_sports.png',
+      heroVideo: '/brand-videos/water-sports.mp4',
       featured: true
     },
     {
@@ -450,6 +589,7 @@ export const data = {
       heroImage: '/brands/boss_play/boss_play_hero_1.png',
       images: ['/brands/boss_play/boss_play_hero_2.png', '/brands/boss_play/boss_play_hero_3.png', '/brands/boss_play/boss_play_hero_4.png', '/brands/boss_play/boss_play_hero_5.png', '/brands/boss_play/boss_play_hero_6.png'],
       logo: '/logos/boss_play.png',
+      heroVideo: '/brand-videos/boss-play.mp4',
       featured: true
     },
     {
@@ -461,6 +601,7 @@ export const data = {
       heroImage: '/brands/lionel/lionel_hero_1.png',
       images: ['/brands/lionel/lionel_hero_2.png', '/brands/lionel/lionel_hero_3.png', '/brands/lionel/lionel_hero_4.png', '/brands/lionel/lionel_hero_5.png', '/brands/lionel/lionel_hero_6.png'],
       logo: '/logos/lionel.png',
+      heroVideo: '/brand-videos/lionel.mp4',
       featured: true
     },
     {
@@ -472,6 +613,7 @@ export const data = {
       heroImage: '/brands/masterpieces/masterpieces_hero_1.png',
       images: ['/brands/masterpieces/masterpieces_hero_2.png', '/brands/masterpieces/masterpieces_hero_3.png', '/brands/masterpieces/masterpieces_hero_4.png', '/brands/masterpieces/masterpieces_hero_5.png', '/brands/masterpieces/masterpieces_hero_6.png'],
       logo: '/logos/masterpieces-logo.png',
+      heroVideo: '/brand-videos/masterpieces.mp4',
       featured: true
     },
     {
@@ -516,6 +658,7 @@ export const data = {
       heroImage: '/brands/ovvel/ovvel_hero_1.png',
       images: ['/brands/ovvel/ovvel_hero_2.png', '/brands/ovvel/ovvel_hero_3.png', '/brands/ovvel/ovvel_hero_4.png', '/brands/ovvel/ovvel_hero_5.png', '/brands/ovvel/ovvel_hero_6.png'],
       logo: '/logos/ovvel.png',
+      heroVideo: '/brand-videos/ovvel.mp4',
       featured: false
     },
     {
@@ -538,6 +681,7 @@ export const data = {
       heroImage: '/brands/silver_circle/silver_circle_hero_6.png',
       images: ['/brands/silver_circle/silver_circle_hero_2.png', '/brands/silver_circle/silver_circle_hero_3.png', '/brands/silver_circle/silver_circle_hero_4.png', '/brands/silver_circle/silver_circle_hero_5.png', '/brands/silver_circle/silver_circle_hero_6.png'],
       logo: '/logos/toys_by_nature.png',
+      heroVideo: '/brand-videos/silver-circle.mp4',
       featured: false
     },
     {
@@ -549,6 +693,7 @@ export const data = {
       heroImage: '/brands/trophy_music/trophy_music_hero_6.png',
       images: ['/brands/trophy_music/trophy_music_hero_2.png', '/brands/trophy_music/trophy_music_hero_3.png', '/brands/trophy_music/trophy_music_hero_4.png', '/brands/trophy_music/trophy_music_hero_5.png', '/brands/trophy_music/trophy_music_hero_6.png'],
       logo: '/logos/3d_toy_store.png',
+      heroVideo: '/brand-videos/trophy-music.mp4',
       featured: false
     },
     {
@@ -560,6 +705,7 @@ export const data = {
       heroImage: '/brands/airhead/airhead_hero_5.png',
       images: ['/brands/airhead/airhead_hero_3.png', '/brands/airhead/airhead_hero_4.png'],
       logo: '/logos/sportsstuff.png',
+      heroVideo: '/brand-videos/sportsstuff.mp4',
       featured: false
     },
     {
@@ -582,6 +728,7 @@ export const data = {
       heroImage: '/brands/ovvel/ovvel_hero_6.png',
       images: [],
       logo: '/logos/Yukon-Charlies_Primary-Logo_Stacked_Black-Blue.png',
+      heroVideo: '/brand-videos/yukon-charlies.mp4',
       featured: false
     }
   ],

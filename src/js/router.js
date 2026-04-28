@@ -15,6 +15,10 @@ export const router = {
       app.innerHTML = '';
       app.classList.remove('page-exit');
 
+      // Pages with a full-bleed dark hero behind the navbar
+      const heroRoutes = new Set(['/', '/brand']);
+      document.body.classList.toggle('has-hero-nav', heroRoutes.has(path));
+
       if (path === '/') {
         app.appendChild(homeView());
       } else if (path === '/brand') {

@@ -4,12 +4,21 @@ import { cart } from '../js/cart.js';
 import { store } from '../js/state.js';
 
 export function homeView() {
+  // If a brand is active, render the brand-scoped homepage instead
+  if (store.activeBrandId) {
+    return brandHomeView(store.activeBrandId);
+  }
+
   const container = document.createElement('div');
   container.className = 'home-page';
 
   container.innerHTML = `
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
+      <!-- Optional master video layer (falls back to slides if missing) -->
+      <video class="hero-video-bg" autoplay muted loop playsinline preload="metadata">
+        <source src="/brand-videos/toys-2000.mp4" type="video/mp4" />
+      </video>
       <!-- Fullscreen background images -->
       ${data.heroSlides.map((slide, i) => `
         <div class="hero-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
@@ -26,8 +35,8 @@ export function homeView() {
             <h1 class="hero-headline animate-item">${slide.headline.replace(slide.accentWord, `<span class="hero-accent hero-accent--${slide.textEffect} ${slide.accentClass || ''}">${slide.accentWord}</span>`)}</h1>
             <p class="hero-sub animate-item">${slide.subheadline}</p>
             <div class="hero-ctas">
-              <a href="${slide.ctaPrimary.link}" class="btn-hero-primary" data-route="${slide.ctaPrimary.link}" ${slide.ctaPrimary.category ? `data-category="${slide.ctaPrimary.category}"` : ''}>${slide.ctaPrimary.text}</a>
-              <a href="${slide.ctaSecondary.link}" class="btn-hero-secondary" data-route="${slide.ctaSecondary.link}">${slide.ctaSecondary.text}</a>
+              <a href="${slide.ctaPrimary.link}" class="btn-hero-primary" data-route="${slide.ctaPrimary.link}" ${slide.ctaPrimary.brand ? `data-brand="${slide.ctaPrimary.brand}"` : ''} ${slide.ctaPrimary.category ? `data-category="${slide.ctaPrimary.category}"` : ''} ${slide.ctaPrimary.catalog ? `data-catalog="${slide.ctaPrimary.catalog}"` : ''}>${slide.ctaPrimary.text}</a>
+              <a href="${slide.ctaSecondary.link}" class="btn-hero-secondary" data-route="${slide.ctaSecondary.link}" ${slide.ctaSecondary.brand ? `data-brand="${slide.ctaSecondary.brand}"` : ''} ${slide.ctaSecondary.category ? `data-category="${slide.ctaSecondary.category}"` : ''} ${slide.ctaSecondary.catalog ? `data-catalog="${slide.ctaSecondary.catalog}"` : ''}>${slide.ctaSecondary.text}</a>
             </div>
           </div>
         `).join('')}
@@ -388,6 +397,14 @@ export function homeView() {
 
   // Wire up interactivity after DOM is built
   requestAnimationFrame(() => {
+    // Hide hero video if missing — slides remain visible behind it
+    const heroVid = container.querySelector('.hero-video-bg');
+    if (heroVid) {
+      const hideVid = () => { heroVid.style.display = 'none'; };
+      heroVid.addEventListener('error', hideVid);
+      heroVid.querySelectorAll('source').forEach(s => s.addEventListener('error', hideVid));
+    }
+
     initHeroCarousel(container);
     initCatalogCarousel(container);
     initCategoryGallery(container);
@@ -486,6 +503,18 @@ function initHeroButtons(container) {
     btn.addEventListener('click', (e) => {
       const route = btn.dataset.route;
       const category = btn.dataset.category;
+      const brand = btn.dataset.brand;
+      const catalogId = btn.dataset.catalog;
+
+      // Open a manufacturer catalog directly when one is wired up
+      if (catalogId) {
+        const catalog = data.catalogs.find(c => c.id === catalogId);
+        if (catalog && (catalog.catalogUrl || catalog.pdfUrl)) {
+          e.preventDefault();
+          store.publish('openCatalog', catalog);
+          return;
+        }
+      }
 
       if (route && route.startsWith('#')) {
         // Smooth scroll handled by initSmoothAnchors via href
@@ -494,8 +523,13 @@ function initHeroButtons(container) {
 
       if (route) {
         e.preventDefault();
-        if (route === '/products' && category) {
-          router.navigate('/products', { category: category });
+        if (route === '/brand' && brand) {
+          store.setActiveBrand(brand);
+          router.navigate('/');
+        } else if (route === '/products' && brand) {
+          router.navigate('/products', { brand });
+        } else if (route === '/products' && category) {
+          router.navigate('/products', { category });
         } else {
           router.navigate(route);
         }
@@ -722,6 +756,406 @@ function initQuoteButtons(container) {
       store.publish('openQuoteModal');
     });
   });
+}
+
+// ── Brand-scoped Homepage ──
+function brandHomeView(brandId) {
+  const brand = data.brands.find(b => b.id === brandId);
+  const container = document.createElement('div');
+  container.className = 'home-page brand-home-page';
+
+  if (!brand) {
+    container.innerHTML = `<div style="padding:260px 24px;text-align:center;"><h2>Brand not found</h2></div>`;
+    return container;
+  }
+
+  const catalog = data.catalogs.find(c => c.id === brandId);
+  const promo = data.promos.find(p => p.brandId === brandId);
+  const products = data.products[brandId] || [];
+  const bestSellers = products.filter(p => p.badge);
+  const showcase = bestSellers.length ? bestSellers : products;
+  const heroImage = brand.heroImage || (brand.images && brand.images[0]) || '';
+  const brandLogo = brand.logo || (catalog && catalog.logo) || '';
+  const galleryImages = [brand.heroImage, ...(brand.images || [])].filter(Boolean).slice(0, 6);
+  const featured = showcase[0];
+
+  // Categories within this brand (derived from its product list)
+  const brandCategoryIds = [...new Set(products.map(p => p.category))];
+  const brandCategories = brandCategoryIds.map(catId => {
+    const catProducts = products.filter(p => p.category === catId);
+    return {
+      id: catId,
+      label: catId.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' '),
+      count: catProducts.length,
+      image: catProducts[0]?.image || heroImage,
+    };
+  });
+
+  // Sister brands — same primary category
+  const siblings = data.brands
+    .filter(b => b.id !== brand.id && b.category === brand.category)
+    .slice(0, 6);
+
+  // Stats — synthesized from real data
+  const stats = [
+    { value: products.length || '20+', label: 'Products in lineup' },
+    { value: promo ? promo.deals.length : '—', label: 'Active promotions' },
+    { value: catalog ? '1' : '—', label: 'Catalog available' },
+    { value: brand.featured ? 'Featured' : 'Partner', label: 'Brand status' },
+  ];
+
+  container.innerHTML = `
+    <!-- ============ BRAND HERO ============ -->
+    <section class="brand-home-hero">
+      <div class="brand-home-hero-media">
+        <img src="${heroImage}" alt="" class="brand-home-hero-poster" aria-hidden="true" />
+        ${brand.heroVideo ? `
+          <video class="brand-home-hero-video" autoplay muted loop playsinline preload="metadata" poster="${heroImage}">
+            <source src="${brand.heroVideo}" type="video/mp4" />
+          </video>
+        ` : ''}
+      </div>
+      <div class="brand-home-hero-overlay"></div>
+      <div class="brand-home-hero-content">
+        ${brandLogo ? `<img src="${brandLogo}" alt="${brand.name}" class="brand-home-hero-logo" />` : `<h1 class="brand-home-hero-title">${brand.name}</h1>`}
+        <span class="brand-home-hero-tagline">${brand.tagline || ''}</span>
+        <p class="brand-home-hero-desc">${brand.description || ''}</p>
+        <div class="brand-home-hero-ctas">
+          <button class="btn-hero-primary" data-bh-action="products">Shop ${brand.name}</button>
+          ${(catalog && (catalog.catalogUrl || catalog.pdfUrl))
+            ? `<button class="btn-hero-secondary" data-bh-action="catalog">View ${catalog.year || ''} Catalog</button>`
+            : ''}
+          ${promo ? `<button class="btn-hero-secondary" data-bh-action="promos">See Promos</button>` : ''}
+        </div>
+      </div>
+      <div class="brand-home-hero-scroll" aria-hidden="true">
+        <span></span>
+      </div>
+    </section>
+
+    <!-- ============ BRAND SUB-NAV ============ -->
+    <div class="brand-subnav">
+      <div class="brand-subnav-inner">
+        <a href="#best-sellers" class="brand-subnav-link" data-scroll="best-sellers">Best Sellers</a>
+        ${brandCategories.length ? `<a href="#categories" class="brand-subnav-link" data-scroll="categories">Categories</a>` : ''}
+        <a href="#brand-story" class="brand-subnav-link" data-scroll="brand-story">About ${brand.name}</a>
+        ${promo ? `<a href="#brand-promos" class="brand-subnav-link" data-scroll="brand-promos">Promos</a>` : ''}
+        ${(catalog && (catalog.catalogUrl || catalog.pdfUrl)) ? `<a href="#brand-catalog" class="brand-subnav-link" data-scroll="brand-catalog">Catalog</a>` : ''}
+        ${siblings.length ? `<a href="#brand-related" class="brand-subnav-link" data-scroll="brand-related">Related Brands</a>` : ''}
+      </div>
+    </div>
+
+    <div class="main-content-gradient">
+
+      <!-- ============ STATS STRIP ============ -->
+      <section class="brand-stats-strip">
+        ${stats.map(s => `
+          <div class="brand-stat">
+            <span class="brand-stat-value">${s.value}</span>
+            <span class="brand-stat-label">${s.label}</span>
+          </div>
+        `).join('')}
+      </section>
+
+      ${featured ? `
+      <!-- ============ FEATURED PRODUCT SPOTLIGHT ============ -->
+      <section class="section brand-home-section brand-spotlight-section">
+        <div class="section-container">
+          <div class="brand-spotlight">
+            <div class="brand-spotlight-image" style="background-image: url('${featured.image}')">
+              ${featured.badge ? `<span class="brand-spotlight-badge">${featured.badge}</span>` : ''}
+            </div>
+            <div class="brand-spotlight-info">
+              <span class="brand-spotlight-eyebrow">Featured Product</span>
+              <h2 class="brand-spotlight-title">${featured.name}</h2>
+              <p class="brand-spotlight-desc">${featured.desc}</p>
+              <div class="brand-spotlight-pricing">
+                <span class="brand-spotlight-price">$${featured.price.toFixed(2)}</span>
+                <span class="brand-spotlight-price-note">wholesale unit price</span>
+              </div>
+              <div class="brand-spotlight-ctas">
+                <button class="btn btn-primary fp-add-cart" data-product-id="${featured.id}" data-brand-id="${brand.id}">Add to Cart</button>
+                <button class="btn btn-outline fp-quick-view" data-product-id="${featured.id}" data-brand-id="${brand.id}">Quick View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>` : ''}
+
+      <!-- ============ BEST SELLERS ============ -->
+      <section class="section brand-home-section" id="best-sellers">
+        <div class="section-container">
+          <div class="section-header section-header-center">
+            <div>
+              <h2 class="section-title">${brand.name} <span class="title-cursive title-orange">Best Sellers</span></h2>
+              <p class="section-subtitle">Top-performing products from ${brand.name} this season.</p>
+            </div>
+          </div>
+          ${showcase.length === 0 ? `
+            <div class="brand-home-empty">
+              <p>Product list coming soon. Reach out to your sales rep for the full ${brand.name} lineup.</p>
+              <button class="btn btn-primary" data-bh-action="products">Browse All Products</button>
+            </div>
+          ` : `
+            <div class="brand-home-products">
+              ${showcase.map((p, i) => `
+                <div class="product-card glass-panel" style="animation-delay:${i * 0.05}s">
+                  <div class="product-image-container">
+                    ${p.badge ? `<span class="fp-badge">${p.badge}</span>` : ''}
+                    <img src="${p.image}" alt="${p.name}" class="product-image" loading="lazy">
+                    <button class="product-quickview-btn fp-quick-view" data-product-id="${p.id}" data-brand-id="${brand.id}">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                      Quick View
+                    </button>
+                  </div>
+                  <div class="product-info">
+                    <div class="product-brand-tag">${brand.name}</div>
+                    <div class="product-title">${p.name}</div>
+                    <div class="product-price-row">
+                      <span class="product-price">$${p.price.toFixed(2)}</span>
+                    </div>
+                    <div class="product-actions">
+                      <button class="btn btn-primary fp-add-cart" data-product-id="${p.id}" data-brand-id="${brand.id}">
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="brand-section-cta">
+              <button class="btn btn-outline" data-bh-action="products">See All ${brand.name} Products</button>
+            </div>
+          `}
+        </div>
+      </section>
+
+      ${brandCategories.length ? `
+      <!-- ============ SHOP BY BRAND CATEGORY ============ -->
+      <section class="section brand-home-section" id="categories">
+        <div class="section-container">
+          <div class="section-header section-header-center">
+            <div>
+              <h2 class="section-title">Shop by <span class="title-cursive title-green">Category</span></h2>
+              <p class="section-subtitle">Browse the ${brand.name} lineup by product type.</p>
+            </div>
+          </div>
+          <div class="brand-category-grid">
+            ${brandCategories.map(cat => `
+              <button class="brand-category-tile" data-bh-category="${cat.id}">
+                <div class="brand-category-tile-img" style="background-image: url('${cat.image}')"></div>
+                <div class="brand-category-tile-overlay"></div>
+                <div class="brand-category-tile-content">
+                  <h3>${cat.label}</h3>
+                  <span class="brand-category-tile-count">${cat.count} ${cat.count === 1 ? 'product' : 'products'}</span>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      </section>` : ''}
+
+      <!-- ============ BRAND STORY ============ -->
+      <section class="section brand-home-section brand-story-section" id="brand-story">
+        <div class="section-container">
+          <div class="brand-story-grid">
+            <div class="brand-story-text">
+              <span class="brand-story-eyebrow">About the brand</span>
+              <h2 class="brand-story-headline">Why retailers choose <span class="title-cursive title-orange">${brand.name}</span></h2>
+              <p>${brand.description}</p>
+              <p>Toys 2000 stocks the full ${brand.name} lineup with wholesale pricing, dedicated rep support, and freight programs that work for resorts, gift shops, and specialty retailers across the Eastern US, Puerto Rico, and the Caribbean.</p>
+              <ul class="brand-story-features">
+                <li><strong>Trusted partner</strong> — long-standing distribution relationship</li>
+                <li><strong>Stocked inventory</strong> — fast turnaround on reorders</li>
+                <li><strong>Promo-eligible</strong> — current Market Time specials apply</li>
+              </ul>
+              <div class="brand-story-ctas">
+                <button class="btn btn-primary" data-bh-action="products">Browse ${brand.name}</button>
+                <a href="mailto:Jim@toys2000.fun?subject=${encodeURIComponent(brand.name + ' inquiry')}" class="btn btn-outline">Talk to a Rep</a>
+              </div>
+            </div>
+            <div class="brand-story-visual">
+              ${galleryImages.slice(0, 4).map((src, i) => `
+                <div class="brand-story-tile brand-story-tile--${i}" style="background-image:url('${src}')"></div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      ${promo ? `
+      <!-- ============ MARKET-TIME PROMOS ============ -->
+      <section class="section brand-home-section" id="brand-promos">
+        <div class="section-container">
+          <div class="section-header section-header-center">
+            <div>
+              <h2 class="section-title">${brand.name} <span class="promo-and-sign">&</span> Market Time Specials</h2>
+              <p class="section-subtitle">Current deals and incentives running for ${brand.name}.</p>
+            </div>
+          </div>
+          <div class="brand-home-promos">
+            ${promo.deals.map(deal => `
+              <div class="promo-card">
+                <div class="promo-card-left">
+                  <div class="promo-card-brand-row">
+                    ${brandLogo ? `<img src="${brandLogo}" alt="${brand.name}" class="promo-card-logo" />` : ''}
+                    <span class="promo-card-brand">${brand.name}</span>
+                    ${deal.badge ? `<span class="promo-card-badge">${deal.badge}</span>` : ''}
+                  </div>
+                  <h4 class="promo-card-title">${deal.title}</h4>
+                  <p class="promo-card-desc">${deal.description}</p>
+                  <span class="promo-card-dates">${deal.dates}</span>
+                </div>
+                <div class="promo-card-right">
+                  <div class="promo-card-discount">${deal.discount}</div>
+                  <div class="promo-card-spend">on ${deal.spend}</div>
+                  <button class="btn btn-primary promo-card-cta" data-action="quote">Get This Deal</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>` : ''}
+
+      ${(catalog && (catalog.catalogUrl || catalog.pdfUrl)) ? `
+      <!-- ============ CATALOG SPOTLIGHT ============ -->
+      <section class="section brand-home-section" id="brand-catalog">
+        <div class="section-container">
+          <div class="brand-catalog-cta" style="background-image: url('${heroImage}')">
+            <div class="brand-catalog-cta-overlay"></div>
+            <div class="brand-catalog-cta-content">
+              <span class="brand-catalog-cta-eyebrow">${catalog.year || 'Latest'} Catalog</span>
+              <h2>The complete ${brand.name} ${catalog.year || ''} lineup</h2>
+              <p>Flip through the full product line, specs, and wholesale pricing.</p>
+              <button class="btn-hero-primary" data-bh-action="catalog">Open the Catalog</button>
+            </div>
+          </div>
+        </div>
+      </section>` : ''}
+
+      ${siblings.length ? `
+      <!-- ============ RELATED BRANDS ============ -->
+      <section class="section brand-home-section" id="brand-related">
+        <div class="section-container">
+          <div class="section-header section-header-center">
+            <div>
+              <h2 class="section-title">You Might Also Like</h2>
+              <p class="section-subtitle">Other brands in the ${brand.category.split('-').join(' ')} category.</p>
+            </div>
+          </div>
+          <div class="brand-related-grid">
+            ${siblings.map(s => `
+              <button class="brand-related-card" data-bh-switch="${s.id}">
+                <div class="brand-related-card-img" style="background-image: url('${s.heroImage}')"></div>
+                <div class="brand-related-card-body">
+                  ${s.logo ? `<img src="${s.logo}" alt="${s.name}" class="brand-related-card-logo" />` : `<h4>${s.name}</h4>`}
+                  <p>${s.tagline || ''}</p>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      </section>` : ''}
+
+    </div><!-- /.main-content-gradient -->
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-bottom">
+        <div class="section-container">
+          <div class="footer-bottom-inner">
+            <span>&copy; 2026 Toys2000. All rights reserved.</span>
+            <div class="footer-bottom-links">
+              <a href="#" data-bh-action="home">Back to Toys 2000 Home</a>
+              <a href="mailto:Jim@toys2000.fun">Contact Sales</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  `;
+
+  // Wire up actions
+  requestAnimationFrame(() => {
+    // Hide video if it fails to load (poster image stays visible)
+    const heroVideo = container.querySelector('.brand-home-hero-video');
+    if (heroVideo) {
+      const hideVideo = () => { heroVideo.style.display = 'none'; };
+      heroVideo.addEventListener('error', hideVideo);
+      heroVideo.querySelectorAll('source').forEach(s => s.addEventListener('error', hideVideo));
+    }
+
+    container.querySelectorAll('[data-bh-action]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const action = btn.dataset.bhAction;
+        if (action === 'products') {
+          router.navigate('/products', { brand: brand.id });
+        } else if (action === 'catalog' && catalog) {
+          store.publish('openCatalog', catalog);
+        } else if (action === 'promos') {
+          store.publish('openBrandPromos', brand.id);
+        } else if (action === 'home') {
+          store.setActiveBrand(null);
+          router.navigate('/');
+        }
+      });
+    });
+
+    // Brand-category tile -> products page filtered by brand + category
+    container.querySelectorAll('[data-bh-category]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        router.navigate('/products', { brand: brand.id, category: btn.dataset.bhCategory });
+      });
+    });
+
+    // Sister brand switching
+    container.querySelectorAll('[data-bh-switch]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        store.setActiveBrand(btn.dataset.bhSwitch);
+        router.navigate('/');
+      });
+    });
+
+    // Sub-nav smooth scroll
+    container.querySelectorAll('[data-scroll]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = container.querySelector(`#${link.dataset.scroll}`);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Add to cart
+    container.querySelectorAll('.fp-add-cart').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const product = (data.products[btn.dataset.brandId] || []).find(p => p.id === btn.dataset.productId);
+        if (product) {
+          cart.add(product, brand);
+          store.publish('toast', { message: `${product.name} added to cart`, type: 'success' });
+        }
+      });
+    });
+
+    // Quick view
+    container.querySelectorAll('.fp-quick-view').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        store.publish('openQuickView', {
+          productId: btn.dataset.productId,
+          brandId: btn.dataset.brandId
+        });
+      });
+    });
+
+    // Inline quote buttons inside promos
+    container.querySelectorAll('[data-action="quote"]').forEach(el => {
+      el.addEventListener('click', () => store.publish('openQuoteModal'));
+    });
+  });
+
+  return container;
 }
 
 // ── Newsletter form ──

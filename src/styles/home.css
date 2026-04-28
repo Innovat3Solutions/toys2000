@@ -35,6 +35,16 @@
   max-height: 1050px;
   overflow: hidden;
   background: #0a0e1a;
+  margin-top: 0; /* navbar/tabs float over hero */
+}
+
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2; /* sits above the slide images when present */
 }
 
 /* Soft fade to white at the bottom edge */
@@ -75,6 +85,13 @@
 
 .hero-slide:nth-child(even) .hero-slide-bg {
   animation-name: heroKenBurns2;
+}
+
+/* SportsStuff hero photos are tightly framed — fit the whole image instead of cropping */
+.hero-slide-bg[style*="Sportsstuff"] {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #0a1828;
 }
 
 @keyframes heroKenBurns {
